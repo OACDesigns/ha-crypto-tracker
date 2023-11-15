@@ -1,0 +1,20 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: My Wealth Tracker
+version: "1.0.0"
+slug: my_wealth_tracker
+description: My Wealth Tracker
+url: "https://github.com/OACDesigns/ha-wealth-tracker/tree/main/my_wealth_tracker"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+map:
+  - share:rw
+options:
+  message: "Hello world..."
+schema:
+  message: "str?"
+# image: "ghcr.io/OACDesigns/{arch}-addon-my-wealth-tracker"  # comment out while developing only!
