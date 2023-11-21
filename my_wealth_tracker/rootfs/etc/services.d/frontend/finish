@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 # ==============================================================================
-# Take down the S6 supervision tree when nginx fails
+# Take down the S6 supervision tree when frontend fails
 # s6-overlay docs: https://github.com/just-containers/s6-overlay
 # ==============================================================================
 
@@ -12,4 +12,4 @@ if [[ "${APP_EXIT_CODE}" -ne 0 ]] && [[ "${APP_EXIT_CODE}" -ne 256 ]]; then
   exec /run/s6/basedir/bin/halt
 fi
 
-bashio::log.info "Service nginx restart after closing"
+bashio::log.info "Service frontend restart after closing"

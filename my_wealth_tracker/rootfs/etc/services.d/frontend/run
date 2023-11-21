@@ -1,10 +1,11 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start the nginx service
+# Start the frontend service
 # s6-overlay docs: https://github.com/just-containers/s6-overlay
 # ==============================================================================
 
-bashio::log.info "${message:="Starting nginx server..."}"
+bashio::log.info "${message:="Starting python frontend server..."}"
 
 ## Run your program
-nginx -g "daemon off;"
+cd public || exit
+python3 -m http.server 8080

@@ -14,9 +14,6 @@ message=$(bashio::config 'message')
 
 ## Print the message the user supplied, defaults to "Hello World..."
 bashio::log.info "${message:="Hello World..."}"
-bashio::log.info "${message:="Starting python server..."}"
 
 ## Run your program
-# exec /usr/bin/my_program
-cd public || exit
-python3 -m http.server 8080
+exec /usr/bin/my_program
