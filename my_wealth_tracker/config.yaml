@@ -11,10 +11,11 @@ arch:
   - amd64
   - i386
 init: false
+ingress: true
 map:
   - share:rw
 options:
   message: "Hello world..."
 schema:
   message: "str?"
-# image: "ghcr.io/OACDesigns/{arch}-addon-my-wealth-tracker"  # comment out while developing only!
+image: "ghcr.io/OACDesigns/{arch}-addon-my-wealth-tracker"  # comment out while developing only!

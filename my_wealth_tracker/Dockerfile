@@ -8,5 +8,22 @@ RUN \
     curl -sSLf -o /usr/bin/tempio \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
 
+# Install requirements for add-on
+RUN \
+    apk add --no-cache \
+    python3
+
+# Add nginx and create the run folder for nginx.
+RUN \
+    apk --no-cache add \
+    nginx \
+    \
+    && mkdir -p /run/nginx
+
+# Copy our ingress conf into the nginx http.d folder.
+# @TODO move file to rootfs instead?
+COPY ingress.conf /etc/nginx/http.d/
+
+
 # Copy root filesystem
 COPY rootfs /
