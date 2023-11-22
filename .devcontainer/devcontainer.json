@@ -19,7 +19,10 @@
 		"timonwong.shellcheck",
 		"esbenp.prettier-vscode",
 		"ms-azuretools.vscode-docker",
-		"redhat.vscode-yaml"
+		"redhat.vscode-yaml",
+		"Vue.vscode-typescript-vue-plugin",
+		"Vue.volar",
+		"bradlc.vscode-tailwindcss"
 	],
       "settings": {
         "terminal.integrated.profiles.linux": {
