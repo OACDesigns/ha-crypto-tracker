@@ -9,15 +9,11 @@ import {
   MenuItem,
   MenuItems
 } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon, UserCircleIcon } from '@heroicons/vue/24/outline'
 import router from '@/router'
+import { useUserStore } from '@/stores/user'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-}
+const user = useUserStore()
 
 const mainNavItems = ['home', 'crypto', 'stocks', 'cash', 'other-investments']
 const navigation = computed(() =>
@@ -25,9 +21,8 @@ const navigation = computed(() =>
     .getRoutes()
     .filter((route) => route.name || '' in mainNavItems)
     .map((navItem) => {
-      console.log(navItem)
       return {
-        name: (navItem.meta.title as string) || 'link',
+        name: (navItem.meta.title as string) || navItem.name,
         link: { name: navItem.name },
         current: navItem.name === router.currentRoute.value.name
       }
@@ -81,11 +76,11 @@ const userNavigation = [
             <Menu as="div" class="relative ml-3">
               <div>
                 <MenuButton
-                  class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm text-gray-400 hover:text-white"
                 >
                   <span class="absolute -inset-1.5" />
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                  <UserCircleIcon class="h-8 w-8" />
                 </MenuButton>
               </div>
               <transition
@@ -131,29 +126,32 @@ const userNavigation = [
 
     <DisclosurePanel class="md:hidden">
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <DisclosureButton
-          v-for="item in navigation"
-          :key="item.name"
-          as="a"
-          :to="item.link"
-          :class="[
-            item.current
-              ? 'bg-gray-900 text-white'
-              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-            'block rounded-md px-3 py-2 text-base font-medium'
-          ]"
-          :aria-current="item.current ? 'page' : undefined"
-          >{{ item.name }}</DisclosureButton
-        >
+        <RouterLink v-for="item in navigation" :key="item.name" :to="item.link">
+          <DisclosureButton
+            :class="[
+              item.current
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              'block rounded-md px-3 py-2 text-base font-medium capitalize'
+            ]"
+            :aria-current="item.current ? 'page' : undefined"
+          >
+            {{ item.name }}
+          </DisclosureButton>
+        </RouterLink>
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
         <div class="flex items-center px-5">
           <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+            <div class="h-10 w-10 rounded-full bg-white">
+              <UserCircleIcon class="h-10 w-10" />
+            </div>
           </div>
           <div class="ml-3">
-            <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
-            <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
+            <div class="text-base font-medium leading-none text-white">{{ user.profile.name }}</div>
+            <div class="text-sm font-medium leading-none text-gray-400">
+              {{ user.profile.email }}
+            </div>
           </div>
           <button
             type="button"
@@ -165,14 +163,13 @@ const userNavigation = [
           </button>
         </div>
         <div class="mt-3 space-y-1 px-2">
-          <DisclosureButton
-            v-for="item in userNavigation"
-            :key="item.name"
-            as="a"
-            :to="item.link"
-            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            >{{ item.name }}</DisclosureButton
-          >
+          <RouterLink v-for="item in userNavigation" :key="item.name" :to="item.link">
+            <DisclosureButton
+              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+            >
+              {{ item.name }}
+            </DisclosureButton>
+          </RouterLink>
         </div>
       </div>
     </DisclosurePanel>
