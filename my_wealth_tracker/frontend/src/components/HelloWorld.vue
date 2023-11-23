@@ -8,8 +8,8 @@ defineProps<{
 const apiServer = 'http://localhost:8083'
 const messageFromBackend = ref('')
 fetch(`${apiServer}/rest/hello-world`)
-  .then((res) => res.text())
-  .then((msg) => (messageFromBackend.value = msg))
+  .then((res) => res.json())
+  .then((body) => (messageFromBackend.value = body.msg))
 </script>
 
 <template>
