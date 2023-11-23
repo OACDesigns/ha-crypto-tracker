@@ -1,7 +1,15 @@
 {
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ]
+  "workspaces": {
+    "packages": [
+      "frontend",
+      "backend"
+    ],
+    "nohoist": [
+      "**/@types",
+      "**/@types/**",
+      "**/@tsed",
+      "**/@tsed/**"
+    ]
+  }
 }
